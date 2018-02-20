@@ -29,7 +29,7 @@ Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
 ########################################################################
 
 import rosegraphics as rg
-
+import math
 
 def main():
     """ Calls the   TEST   functions in this module. """
@@ -101,8 +101,34 @@ def hourglass(window, n, point, radius, color):
     #    DIFFICULTY:      8
     #    TIME ESTIMATE:  25 minutes (warning: this problem is challenging)
     # ------------------------------------------------------------------
+    dh = math.sqrt(3) * radius
+    circle = rg.Circle(point, radius)
+    circle.fill_color = color
+    circle.attach_to(window)
+    line = rg.Line(rg.Point(point.x + radius, point.y), rg.Point(point.x - radius, point.y))
+    line.attach_to(window)
+    window.render()
+    x = point.x
+    y = point.y
+    for k in range(1, n):
+        circle1 = rg.Circle(rg.Point(x + (k * radius), y + (k * dh)), radius)
+        circle1.fill_color = color
+        circle1.attach_to(window)
+        circle2 = rg.Circle(rg.Point(x + (k * radius), y - (k * dh)), radius)
+        circle2.fill_color = color
+        circle2.attach_to(window)
+        draw_left(k, circle1, window)
+        draw_left(k, circle2, window)
+        window.render()
 
-
+def draw_left(n, circle, window):
+    for i in range(n + 1):
+        new_circle = rg.Circle(rg.Point(circle.center.x - (2 * i * circle.radius), circle.center.y), circle.radius)
+        new_circle.fill_color = circle.fill_color
+        new_circle.attach_to(window)
+    line = rg.Line(rg.Point(circle.center.x + circle.radius, circle.center.y),
+                   rg.Point(circle.center.x - ((((i + 1) * 2) - 1) * circle.radius), circle.center.y))
+    line.attach_to(window)
 
 def run_test_many_hourglasses():
     """ Tests the    many_hourglasses    function. """

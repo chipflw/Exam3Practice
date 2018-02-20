@@ -45,7 +45,7 @@ def main():
 def run_test_practice_problem3():
     """ Tests the   practice_problem3  function. """
     ####################################################################
-    # TODO: 2. Implement this TEST function.
+    # DONE: 2. Implement this TEST function.
     #   It TESTS the  practice_problem3  function defined below.
     #   Include at least ** 2 ** ADDITIONAL tests beyond those we wrote.
     #
@@ -208,7 +208,7 @@ def practice_problem3(start, n, threshold):
       :type threshold: float
     """
     ####################################################################
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #          Some tests are already written for you (above),
     #          but you are required to write ADDITIONAL tests (above).
     ####################################################################
@@ -216,14 +216,21 @@ def practice_problem3(start, n, threshold):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   < 15 minutes.
     ####################################################################
-    newlist = []
-    for k in range(start, n):
-        sinval = math.sin(k)
-        cosval = math.cos(k)
-        total = sinval + cosval
-        if total >= threshold:
-            newlist += [k]
+
+    if threshold <= math.sqrt(2):
+        newlist = []
+        count = start
+        while len(newlist) < n:
+            total = math.sin(count) + math.cos(count)
+            if total > threshold:
+                newlist += [count]
+            count += 1
+    else:
+        newlist = []
+        for k in range(n):
+            newlist += [start + k]
     return newlist
+
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
